@@ -26,6 +26,11 @@ const RoomSelector = ({
 
   if (!session || !conflictSession) return null;
 
+  // Filter out rooms with no value and the conflict room
+  const availableRooms = rooms.filter(
+    room => room && room.trim() !== '' && room !== conflictSession.salle
+  );
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
@@ -44,13 +49,17 @@ const RoomSelector = ({
                 <SelectValue placeholder="Select a room" />
               </SelectTrigger>
               <SelectContent>
-                {rooms
-                  .filter(room => room !== conflictSession.salle)
-                  .map((room) => (
+                {availableRooms.length > 0 ? (
+                  availableRooms.map((room) => (
                     <SelectItem key={room} value={room}>
                       {room}
                     </SelectItem>
-                  ))}
+                  ))
+                ) : (
+                  <SelectItem value="no-rooms-available" disabled>
+                    No available rooms
+                  </SelectItem>
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -64,7 +73,7 @@ const RoomSelector = ({
               onRoomSelect(selectedRoom);
               onClose();
             }}
-            disabled={!selectedRoom}
+            disabled={!selectedRoom || selectedRoom === 'no-rooms-available'}
           >
             Confirm Change
           </Button>
