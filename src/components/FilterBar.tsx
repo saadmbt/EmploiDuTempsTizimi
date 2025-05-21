@@ -27,17 +27,24 @@ const FilterBar = ({
   isLoading = false,
 }: FilterBarProps) => {
   
+  // Filter out any empty strings and sort the options
   const sortedFormateurOptions = useMemo(() => 
-    [...formateurOptions].sort(), [formateurOptions]
-  );
+    [...formateurOptions]
+      .filter(formateur => formateur && formateur.trim() !== '')
+      .sort()
+  , [formateurOptions]);
 
   const sortedGroupeOptions = useMemo(() => 
-    [...groupeOptions].sort(), [groupeOptions]
-  );
+    [...groupeOptions]
+      .filter(groupe => groupe && groupe.trim() !== '')
+      .sort()
+  , [groupeOptions]);
 
   const sortedSalleOptions = useMemo(() => 
-    [...salleOptions].sort(), [salleOptions]
-  );
+    [...salleOptions]
+      .filter(salle => salle && salle.trim() !== '')
+      .sort()
+  , [salleOptions]);
   
   return (
     <div className="flex flex-wrap items-center gap-3 p-4 bg-white border-b">
@@ -55,7 +62,7 @@ const FilterBar = ({
             <SelectValue placeholder="All Teachers" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Teachers</SelectItem>
+            <SelectItem value="_all">All Teachers</SelectItem>
             {sortedFormateurOptions.map((formateur) => (
               <SelectItem key={formateur} value={formateur}>
                 {formateur}
@@ -79,7 +86,7 @@ const FilterBar = ({
             <SelectValue placeholder="All Groups" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Groups</SelectItem>
+            <SelectItem value="_all">All Groups</SelectItem>
             {sortedGroupeOptions.map((groupe) => (
               <SelectItem key={groupe} value={groupe}>
                 {groupe}
@@ -103,7 +110,7 @@ const FilterBar = ({
             <SelectValue placeholder="All Rooms" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Rooms</SelectItem>
+            <SelectItem value="_all">All Rooms</SelectItem>
             {sortedSalleOptions.map((salle) => (
               <SelectItem key={salle} value={salle}>
                 {salle}
