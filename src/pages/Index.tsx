@@ -1,12 +1,10 @@
-
-import { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import ScheduleGrid from '@/components/ScheduleGrid';
-import FilterBar from '@/components/FilterBar';
-import { useSchedule } from '@/hooks/useSchedule';
-import { FilterType } from '@/types';
-import { useToast } from '@/components/ui/use-toast';
+import ScheduleGrid from '../components/ScheduleGrid';
+import FilterBar from '../components/FilterBar';
+import { useSchedule } from '../hooks/useSchedule';
+import { FilterType } from '../types';
+import { useToast } from '../components/ui/use-toast';
 
 const Index = () => {
   const {
@@ -18,23 +16,26 @@ const Index = () => {
     fetchData,
     uniqueFormateurValues,
     uniqueGroupeValues,
-    uniqueSalleValues
+    uniqueSalleValues,
+    filters,
+    addFilter,
+    removeFilter,
   } = useSchedule();
-
-  const [filters, setFilters] = useState<Record<string, string>>({
-    formateur: '',
-    groupe: '',
-    salle: '',
-  });
 
   const { toast } = useToast();
 
+  // Convert filters array to Record<string, string> for FilterBar
+  const filtersRecord: Record<string, string> = {};
+  filters.forEach(filter => {
+    filtersRecord[filter.type] = filter.value;
+  });
+
   const handleFilterChange = (type: FilterType, value: string) => {
-    setFilters((prev) => ({ ...prev, [type]: value }));
+    addFilter({ type, value });
   };
 
   const handleClearFilter = (type: FilterType) => {
-    setFilters((prev) => ({ ...prev, [type]: '' }));
+    removeFilter(type);
   };
 
   const handleRefresh = () => {
@@ -60,7 +61,7 @@ const Index = () => {
           onFilterChange={handleFilterChange}
           onClearFilter={handleClearFilter}
           onRefresh={handleRefresh}
-          filters={filters}
+          filters={filtersRecord}
           isLoading={loading}
         />
 

@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Session } from '../types';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -26,27 +25,24 @@ const RoomSelector = ({
 
   if (!session || !conflictSession) return null;
 
-  // Filter out rooms with no value and the conflict room
-  const availableRooms = rooms.filter(
-    room => room && room.trim() !== '' && room !== conflictSession.salle
-  );
+  const availableRooms = rooms
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Resolve Room Conflict</DialogTitle>
+          <DialogTitle>Résoudre le conflit de salle</DialogTitle>
         </DialogHeader>
         <div className="space-y-4 py-4">
           <div className="text-sm text-red-500">
-            Room conflict detected! The session "{session.module}" for {session.groupe} conflicts with 
-            "{conflictSession.module}" in room {conflictSession.salle}.
+            Conflit de salle détecté ! La séance "{session.module}" pour {session.groupe} est en conflit avec 
+            "{conflictSession.module}" dans la salle {conflictSession.salle}.
           </div>
           <div>
-            <p className="text-sm font-medium mb-2">Select a different room:</p>
+            <p className="text-sm font-medium mb-2">Sélectionnez une autre salle :</p>
             <Select value={selectedRoom} onValueChange={setSelectedRoom}>
               <SelectTrigger>
-                <SelectValue placeholder="Select a room" />
+                <SelectValue placeholder="Sélectionnez une salle" />
               </SelectTrigger>
               <SelectContent>
                 {availableRooms.length > 0 ? (
@@ -57,7 +53,7 @@ const RoomSelector = ({
                   ))
                 ) : (
                   <SelectItem value="no-rooms-available" disabled>
-                    No available rooms
+                    Aucune salle disponible
                   </SelectItem>
                 )}
               </SelectContent>
@@ -66,7 +62,7 @@ const RoomSelector = ({
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>
-            Cancel
+            Annuler
           </Button>
           <Button 
             onClick={() => {
@@ -75,7 +71,7 @@ const RoomSelector = ({
             }}
             disabled={!selectedRoom || selectedRoom === 'no-rooms-available'}
           >
-            Confirm Change
+            Confirmer
           </Button>
         </DialogFooter>
       </DialogContent>

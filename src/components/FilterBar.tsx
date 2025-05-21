@@ -1,5 +1,4 @@
-
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { FilterType } from '@/types';
@@ -27,7 +26,6 @@ const FilterBar = ({
   isLoading = false,
 }: FilterBarProps) => {
   
-  // Filter out any empty strings and sort the options
   const sortedFormateurOptions = useMemo(() => 
     [...formateurOptions]
       .filter(formateur => formateur && formateur.trim() !== '')
@@ -50,19 +48,19 @@ const FilterBar = ({
     <div className="flex flex-wrap items-center gap-3 p-4 bg-white border-b">
       <div className="flex flex-col gap-1">
         <label htmlFor="formateur-filter" className="text-sm font-medium">
-          Teacher
+          Formateur
         </label>
         <Select
           value={filters.formateur || ''}
           onValueChange={(value) => 
-            value ? onFilterChange('formateur', value) : onClearFilter('formateur')
+            value === '_all' ? onClearFilter('formateur') : onFilterChange('formateur', value)
           }
         >
           <SelectTrigger id="formateur-filter" className="w-[200px]">
-            <SelectValue placeholder="All Teachers" />
+            <SelectValue placeholder="Tous les Formateurs" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="_all">All Teachers</SelectItem>
+            <SelectItem value="_all">Tous les Formateurs</SelectItem>
             {sortedFormateurOptions.map((formateur) => (
               <SelectItem key={formateur} value={formateur}>
                 {formateur}
@@ -74,19 +72,19 @@ const FilterBar = ({
 
       <div className="flex flex-col gap-1">
         <label htmlFor="groupe-filter" className="text-sm font-medium">
-          Group
+          Groupe
         </label>
         <Select
           value={filters.groupe || ''}
           onValueChange={(value) => 
-            value ? onFilterChange('groupe', value) : onClearFilter('groupe')
+            value === '_all' ? onClearFilter('groupe') : onFilterChange('groupe', value)
           }
         >
           <SelectTrigger id="groupe-filter" className="w-[200px]">
-            <SelectValue placeholder="All Groups" />
+            <SelectValue placeholder="Tous les Groupes" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="_all">All Groups</SelectItem>
+            <SelectItem value="_all">Tous les Groupes</SelectItem>
             {sortedGroupeOptions.map((groupe) => (
               <SelectItem key={groupe} value={groupe}>
                 {groupe}
@@ -98,19 +96,19 @@ const FilterBar = ({
 
       <div className="flex flex-col gap-1">
         <label htmlFor="salle-filter" className="text-sm font-medium">
-          Room
+          Salle
         </label>
         <Select
           value={filters.salle || ''}
           onValueChange={(value) => 
-            value ? onFilterChange('salle', value) : onClearFilter('salle')
+            value === '_all' ? onClearFilter('salle') : onFilterChange('salle', value)
           }
         >
           <SelectTrigger id="salle-filter" className="w-[200px]">
-            <SelectValue placeholder="All Rooms" />
+            <SelectValue placeholder="Toutes les Salles" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="_all">All Rooms</SelectItem>
+            <SelectItem value="_all">Toutes les Salles</SelectItem>
             {sortedSalleOptions.map((salle) => (
               <SelectItem key={salle} value={salle}>
                 {salle}
@@ -129,7 +127,7 @@ const FilterBar = ({
           className="h-10 w-10"
         >
           <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-          <span className="sr-only">Refresh</span>
+          <span className="sr-only">Actualiser</span>
         </Button>
       </div>
     </div>

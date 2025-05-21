@@ -13,7 +13,6 @@ interface ScheduleGridProps {
   rooms: string[];
   isLoading?: boolean;
 }
-
 const ScheduleGrid = ({
   sessions,
   hasConflict,
@@ -23,25 +22,23 @@ const ScheduleGrid = ({
 }: ScheduleGridProps) => {
   const { toast } = useToast();
   const [roomSelectorOpen, setRoomSelectorOpen] = useState(false);
+  const [ListavailableRooms, setListavailableRooms] = useState<string[]>(rooms);
   const [draggedSession, setDraggedSession] = useState<Session | null>(null);
   const [conflictSession, setConflictSession] = useState<Session | null>(null);
   const [targetCell, setTargetCell] = useState<Cell | null>(null);
   
   const days = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
   const timeSlots = [
-    { id: 1, label: '08:30 - 11:00' },
-    { id: 2, label: '11:00 - 13:30' },
-    { id: 3, label: '13:30 - 16:00' },
-    { id: 4, label: '16:00 - 18:30' },
+    { id: 1, label: '08h30 - 11h00' },
+    { id: 2, label: '11h00 - 13h30' },
+    { id: 3, label: '13h30 - 16h00' },
+    { id: 4, label: '16h00 - 18h30' },
   ];
 
   const handleDrop = async (session: Session, day: string, slot: number) => {
-    // If the session is already in this cell, do nothing
     if (session.jour === day && session.creneau === slot) return;
     
     const targetCell = { day, slot };
-    
-    // Check for conflicts
     const conflict = hasConflict(session, targetCell);
     
     if (conflict) {
@@ -49,21 +46,32 @@ const ScheduleGrid = ({
       setConflictSession(conflict);
       setTargetCell(targetCell);
       setRoomSelectorOpen(true);
+      const availableRooms= sessions.filter(
+        s => s.jour === day && s.creneau === slot && s.salle !== conflict.salle
+      );
+      if (availableRooms.length === 0) {
+        toast({
+          title: 'Erreur de déplacement',
+          description: 'Aucune salle disponible pour cette séance.',
+          variant: 'destructive',
+        }
+      )}
+      setListavailableRooms(availableRooms.map(s => s.salle));
+      
       return;
     }
     
-    // No conflict, update the session
     const success = await updateSession(session.id, { jour: day, creneau: slot });
     
     if (success) {
       toast({
-        title: 'Session moved',
-        description: `${session.module} for ${session.groupe} has been moved to ${day}, ${timeSlots.find(t => t.id === slot)?.label}`,
+        title: 'Séance déplacée',
+        description: `${session.module} pour ${session.groupe} a été déplacé au ${day}, ${timeSlots.find(t => t.id === slot)?.label}`,
       });
     } else {
       toast({
-        title: 'Error moving session',
-        description: 'Something went wrong. Please try again.',
+        title: 'Erreur de déplacement',
+        description: 'Une erreur est survenue. Veuillez réessayer.',
         variant: 'destructive',
       });
     }
@@ -80,13 +88,13 @@ const ScheduleGrid = ({
     
     if (success) {
       toast({
-        title: 'Room changed',
-        description: `${draggedSession.module} for ${draggedSession.groupe} has been moved to ${room}`,
+        title: 'Salle modifiée',
+        description: `${draggedSession.module} pour ${draggedSession.groupe} a été déplacé vers la salle ${room}`,
       });
     } else {
       toast({
-        title: 'Error changing room',
-        description: 'Something went wrong. Please try again.',
+        title: 'Erreur de modification',
+        description: 'Une erreur est survenue. Veuillez réessayer.',
         variant: 'destructive',
       });
     }
@@ -177,7 +185,7 @@ const ScheduleGrid = ({
         onClose={() => setRoomSelectorOpen(false)}
         session={draggedSession}
         conflictSession={conflictSession}
-        rooms={rooms}
+        rooms={ListavailableRooms}
         onRoomSelect={handleRoomSelect}
       />
     </div>

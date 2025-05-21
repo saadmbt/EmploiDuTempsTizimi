@@ -1,73 +1,97 @@
-# Welcome to your Lovable project
+# TIZIMI
 
-## Project info
+## Project Overview
 
-**URL**: https://lovable.dev/projects/ace55fe4-3381-4c3c-9fab-cc003ff1ca11
+TIZIMI is a web application designed to help manage and organize teaching sessions efficiently. It provides an interactive schedule grid with drag-and-drop capabilities, filtering options, and real-time updates to streamline session planning.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- Dynamic schedule grid displaying sessions by day and time slot.
+- Filter sessions by Formateur , Groupe , and Salle .
+- Drag and drop sessions to reschedule.
+- Conflict detection when moving sessions.
+- Room selection modal for resolving conflicts.
+- Real-time filtering and refreshing of schedule data.
+- Responsive design for desktop and mobile devices.
 
-**Use Lovable**
+## Technologies Used
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ace55fe4-3381-4c3c-9fab-cc003ff1ca11) and start prompting.
+- React with TypeScript
+- Vite for build tooling
+- React DnD for drag-and-drop functionality
+- Tailwind CSS for styling
+- shadcn-ui component library
+- React Query for data fetching and caching
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js and npm installed (recommend using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Installation
 
-Follow these steps:
+1. Clone the repository:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
 git clone <YOUR_GIT_URL>
+```
 
-# Step 2: Navigate to the project directory.
+2. Navigate to the project directory:
+
+```bash
 cd <YOUR_PROJECT_NAME>
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3. Install dependencies:
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
+```
+
+4. Start the development server:
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+5. Open your browser and visit `http://localhost:3000` to view the app.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Usage
 
-**Use GitHub Codespaces**
+- Use the filter bar at the top to select Formateur, Groupe, or Salle to filter sessions.
+- Drag sessions within the schedule grid to reschedule.
+- If conflicts arise, use the room selector modal to resolve them.
+- Click the refresh button to reload the latest schedule data.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Testing
 
-## What technologies are used for this project?
+- The application has been tested for:
+  - Filter functionality: selecting and clearing filters updates the schedule grid correctly.
+  - Drag and drop session rescheduling with conflict detection.
+  - Room selection modal behavior.
+  - Data refresh functionality.
+  - Responsive UI behavior.
 
-This project is built with:
+## Deployment
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- The project can be deployed using any static site hosting service.
+- For production builds, run:
 
-## How can I deploy this project?
+```bash
+npm run build
+```
 
-Simply open [Lovable](https://lovable.dev/projects/ace55fe4-3381-4c3c-9fab-cc003ff1ca11) and click on Share -> Publish.
+- Serve the `dist` directory with your preferred static server.
 
-## Can I connect a custom domain to my Lovable project?
+## Contributing
 
-Yes, you can!
+Contributions are welcome! Please fork the repository and submit pull requests.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## License
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+This project is licensed under the MIT License.
+
+## Contact
+
+For questions or support, please contact the project maintainer.

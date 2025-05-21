@@ -1,16 +1,9 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Session, Cell, Filter } from '../types';
+import mockData from '../../solution_cp.json';
 
-// Mock data (will be replaced with API call)
-const mockData: Session[] = [
-  { id: '1', formateur: 'Prof. Smith', groupe: 'Group A', module: 'Mathematics', jour: 'lundi', creneau: 1, salle: 'Room 101' },
-  { id: '2', formateur: 'Dr. Johnson', groupe: 'Group B', module: 'Physics', jour: 'mardi', creneau: 2, salle: 'Lab 202' },
-  { id: '3', formateur: 'Mrs. Williams', groupe: 'Group C', module: 'Chemistry', jour: 'mercredi', creneau: 3, salle: 'Lab 303' },
-  { id: '4', formateur: 'Mr. Brown', groupe: 'Group A', module: 'Computer Science', jour: 'jeudi', creneau: 4, salle: 'Room 404' },
-  { id: '5', formateur: 'Prof. Davis', groupe: 'Group D', module: 'Biology', jour: 'vendredi', creneau: 1, salle: 'Lab 505' },
-  { id: '6', formateur: 'Dr. Miller', groupe: 'Group B', module: 'Literature', jour: 'samedi', creneau: 2, salle: 'Room 606' }
-];
+// Import data from solution_cp.json
 
 export const useSchedule = () => {
   const [sessions, setSessions] = useState<Session[]>([]);
